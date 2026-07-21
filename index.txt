@@ -585,7 +585,8 @@ hr{border:none;border-top:2px solid var(--gray-light);margin:1.25rem 0}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 /* ===== CONFIG ===== */
-const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyCbdypPiIklybq8_FAEDNwZbWoCTs4bE42VXFIyW7eOc8aeo2zln06K3zbFAOSLu66/exec';
+const SHEETS_URL = 
+'https://script.google.com/macros/s/AKfycbwakvJZd-PBG-PCGOKCY_wbqeUuF8LcHPhuiN4etxmrG9_Ujo4wQ0xeKOFxSY0L4wXNcg/exec';
 
 /* ===== ESCALA LIKERT — 4 opções (instrumento original ATPH) ===== */
 const LIKERT = [
