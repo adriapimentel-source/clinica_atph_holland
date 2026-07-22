@@ -1037,15 +1037,15 @@
        const lv=vtx(i,R+26);
        const lv2=vtx(i,R+52);
        dots+=`<circle cx="${sv.x.toFixed(1)}" cy="${sv.y.toFixed(1)}" r="5" fill="${COLS[t]}" stroke="white" stroke-width="1.5"/>`;
-       labels+=`<text x="${lv.x.toFixed(1)}" y="${lv.y.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-family="Nunito,sans-serif" font-size="15" font-weight="900" fill="${COLS[t]}">${SHORT[t]}</text>`;
-       labels+=`<text x="${lv2.x.toFixed(1)}" y="${lv2.y.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-family="Nunito,sans-serif" font-size="12" font-weight="700" fill="${COLS[t]}">${score.toFixed(2)}</text>`;
+       labels+=`<text x="${lv.x.toFixed(1)}" y="${lv.y.toFixed(1)}" dy="0.35em" text-anchor="middle" font-family="Nunito,sans-serif" font-size="15" font-weight="900" fill="${COLS[t]}">${SHORT[t]}</text>`;
+       labels+=`<text x="${lv2.x.toFixed(1)}" y="${lv2.y.toFixed(1)}" dy="0.35em" text-anchor="middle" font-family="Nunito,sans-serif" font-size="12" font-weight="700" fill="${COLS[t]}">${score.toFixed(2)}</text>`;
      });
    
      // Marcas de escala no eixo R (direita visual)
      let scaleMks='';
      [1,2,3,4].forEach(v=>{
        const sv=vtx(0,R*v/4);
-       scaleMks+=`<text x="${(sv.x+5).toFixed(1)}" y="${sv.y.toFixed(1)}" font-family="Nunito,sans-serif" font-size="8" fill="rgba(255,255,255,.5)" dominant-baseline="middle">${v}</text>`;
+       scaleMks+=`<text x="${(sv.x+5).toFixed(1)}" y="${sv.y.toFixed(1)}" dy="0.35em" font-family="Nunito,sans-serif" font-size="8" fill="rgba(255,255,255,.5)">${v}</text>`;
      });
    
      return `<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:300px;margin:0 auto;display:block" role="img" aria-label="Gráfico hexagonal dos tipos RIASEC">
