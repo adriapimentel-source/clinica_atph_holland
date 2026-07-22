@@ -24,6 +24,9 @@
    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
    html{scroll-behavior:smooth}
    body{font-family:var(--font-main);font-size:var(--font-size-base);line-height:var(--line-height);color:var(--text-main);background:var(--off-white);min-height:100vh}
+   p{text-align:justify}
+   .brand-text p,.hero-banner p,.results-hero p,.save-status,.a11y-panel p{text-align:left}
+   .hero-banner p,.results-hero p{text-align:center}
    .skip-link{position:absolute;top:-100px;left:1rem;background:var(--blue-mid);color:var(--white);padding:.5rem 1rem;border-radius:var(--radius-sm);font-weight:700;z-index:9999;transition:top .2s}
    .skip-link:focus{top:1rem}
    .app-wrapper{max-width:860px;margin:0 auto;padding:1rem;min-height:100vh}
@@ -88,8 +91,10 @@
    /* FORM */
    .form-group{margin-bottom:1.25rem}
    .form-group label{display:block;font-weight:700;margin-bottom:.4rem;color:var(--text-main);font-size:.95rem}
-   .form-group input[type=text],.form-group input[type=number],.form-group input[type=date],.form-group select{width:100%;padding:.75rem 1rem;border:2px solid var(--gray-light);border-radius:var(--radius-sm);font-family:var(--font-main);font-size:var(--font-size-base);color:var(--text-main);background:var(--white);transition:border-color .2s,box-shadow .2s;appearance:none}
-   .form-group input[type=text]:focus,.form-group select:focus{outline:none;border-color:var(--blue-mid);box-shadow:0 0 0 3px rgba(4,108,148,.15)}
+   .form-group input[type=text],.form-group input[type=number],.form-group input[type=date],.form-group select,.form-group textarea{width:100%;padding:.75rem 1rem;border:2px solid var(--gray-light);border-radius:var(--radius-sm);font-family:var(--font-main);font-size:var(--font-size-base);color:var(--text-main);background:var(--white);transition:border-color .2s,box-shadow .2s;appearance:none}
+   .form-group textarea{resize:vertical;min-height:120px;line-height:1.6}
+   .form-group input[type=text]:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--blue-mid);box-shadow:0 0 0 3px rgba(4,108,148,.15)}
+   .optional-tag{font-size:.75rem;font-weight:700;color:var(--text-soft);background:var(--gray-light);padding:.2rem .6rem;border-radius:100px;margin-left:.4rem;vertical-align:middle}
    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
    @media(max-width:500px){.form-row{grid-template-columns:1fr}}
    
@@ -109,9 +114,9 @@
    .type-cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1rem;margin:1.25rem 0}
    .type-card{border-radius:var(--radius);padding:1.25rem;border-left:6px solid;background:var(--white);box-shadow:var(--shadow-card);transition:transform .2s}
    .type-card:hover{transform:translateY(-3px)}
-   .type-card .type-emoji{font-size:2.2rem;margin-bottom:.5rem;display:block}
-   .type-card .type-name{font-size:1.05rem;font-weight:900;margin-bottom:.3rem}
-   .type-card .type-desc{font-size:.88rem;color:var(--text-soft);line-height:1.5}
+   .type-card .type-emoji{font-size:2.2rem;margin-bottom:.5rem;display:block;text-align:center}
+   .type-card .type-name{font-size:1.05rem;font-weight:900;margin-bottom:.3rem;text-align:center}
+   .type-card .type-desc{font-size:.88rem;color:var(--text-soft);line-height:1.5;text-align:justify}
    .type-card .type-example{margin-top:.6rem;font-size:.8rem;font-weight:700;padding:.3rem .6rem;border-radius:var(--radius-sm);display:inline-block}
    .type-R{border-color:#e07b39}.type-R .type-example{background:#fff3ec;color:#e07b39}
    .type-I{border-color:var(--blue-mid)}.type-I .type-example{background:#e8f4fb;color:var(--blue-mid)}
@@ -121,8 +126,9 @@
    .type-C{border-color:var(--green-mid)}.type-C .type-example{background:#edfaf0;color:var(--green-dark)}
    
    /* ALERT */
-   .alert-box{background:linear-gradient(135deg,#fff3cd,#ffe8a0);border:2px solid var(--accent-warm);border-radius:var(--radius);padding:1.5rem;margin:1.25rem 0;position:relative}
-   .alert-box::before{content:'💡';position:absolute;top:-15px;left:20px;font-size:1.8rem;background:white;padding:0 4px;border-radius:50%}
+   .alert-box{background:linear-gradient(135deg,#fff3cd,#ffe8a0);border:2px solid var(--accent-warm);border-radius:var(--radius);padding:1.5rem;margin:1.75rem 0;display:flex;gap:1rem;align-items:flex-start}
+   .alert-icon{width:52px;height:52px;background:var(--accent-warm);color:white;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0;box-shadow:0 4px 10px rgba(245,166,35,.35)}
+   .alert-content{flex:1;min-width:0}
    .alert-box h3{font-size:1.05rem;font-weight:900;margin-bottom:.5rem;color:#7a5500}
    .alert-box p{font-size:.93rem;color:#5a4000;line-height:1.6}
    
@@ -207,6 +213,10 @@
    
      /* Cards */
      .card{padding:1rem}
+
+     /* Alert box: ícone um pouco menor no celular */
+     .alert-box{padding:1.1rem;gap:.75rem}
+     .alert-icon{width:42px;height:42px;font-size:1.3rem;border-radius:12px}
    
      /* Type cards: 1 coluna */
      .type-cards-grid{grid-template-columns:1fr}
@@ -394,21 +404,24 @@
      <div class="card">
        <h2 class="fw9 cb mb2" style="font-size:1.3rem">🗺️ Antes de começar: o que é a Tipologia de Holland?</h2>
        <p class="mb2">
-         O psicólogo <strong>John Holland</strong> passou anos estudando como as pessoas escolhem suas profissões.
-         Ele descobriu que existem <strong>6 tipos de personalidade profissional</strong> — e a maioria das pessoas
-         tem características de 2 ou 3 tipos misturados!
+         O psicólogo <strong>John Holland</strong> pesquisou por décadas como as pessoas escolhem sua profissão
+         e criou o modelo <strong>RIASEC</strong>, com 6 perfis de personalidade. A maioria de nós é uma mistura
+         de 2 ou 3 desses perfis.
        </p>
        <div class="alert-box" role="note">
-         <h3>🎯 Ter habilidade ≠ Ter vontade!</h3>
-         <p>
-           Imagine a <strong>Mariana</strong>: ela é ótima em matemática e seus professores vivem dizendo que ela deveria ser engenheira.
-           Mas Mariana <em>odeia</em> ficar sozinha com máquinas e adora ajudar pessoas. Ela descobriu que seu perfil é
-           Social — e hoje é uma assistente social incrível! 💚
-         </p>
-         <p class="mt1">
-           <strong>Ser bom em algo não significa que você vai ser feliz fazendo isso todo dia.</strong>
-           Esta avaliação mede seus <em>interesses</em>, não suas habilidades. Seja honesto!
-         </p>
+         <div class="alert-icon" aria-hidden="true">💡</div>
+         <div class="alert-content">
+           <h3>Ter habilidade ≠ Ter vontade!</h3>
+           <p>
+             Imagine a <strong>Mariana</strong>: ela é ótima em matemática e seus professores vivem dizendo que ela deveria ser engenheira.
+             Mas Mariana <em>odeia</em> ficar sozinha com máquinas e adora ajudar pessoas. Ela descobriu que seu perfil é
+             Social — e hoje é uma assistente social incrível! 💚
+           </p>
+           <p class="mt1">
+             <strong>Ser bom em algo não significa que você vai ser feliz fazendo isso todo dia.</strong>
+             Esta avaliação mede seus <em>interesses</em>, não suas habilidades. Seja honesto!
+           </p>
+         </div>
        </div>
        <p class="mb2 mt2">Conheça os 6 tipos:</p>
      </div>
@@ -574,7 +587,24 @@
        </a>
      </div>
      </div><!-- /resultsCapture -->
-   
+
+     <div class="card card-accent" style="margin-top:0.5rem">
+       <h2 style="font-size:1.05rem;font-weight:900;color:var(--blue-mid);margin-bottom:.5rem">
+         💭 Para refletir <span class="optional-tag">Pergunta opcional</span>
+       </h2>
+       <p style="font-size:.88rem;color:var(--text-soft);margin-bottom:1rem">
+         Esta pergunta não é obrigatória e não altera o seu resultado. É um espaço para você registrar, com suas próprias palavras, o que esta atividade te ajudou a perceber.
+       </p>
+       <div class="form-group" style="margin-bottom:.75rem">
+         <label for="txtReflexao">
+           Considerando o seu Código RIASEC e as profissões apresentadas: o que esse resultado revela sobre você? Você concorda com o que a avaliação apontou, ou sente que ela não representa bem quem você é? O que essa reflexão te ajuda a entender sobre os próximos passos da sua trajetória?
+         </label>
+         <textarea id="txtReflexao" placeholder="Escreva aqui sua reflexão, se desejar..."></textarea>
+       </div>
+       <button class="btn btn-ghost" onclick="sendReflexao()">Enviar minha reflexão</button>
+       <div id="reflexaoStatus" class="save-status" role="status" aria-live="polite" style="display:none"></div>
+     </div>
+
      <div id="saveStatus" class="save-status" role="status" aria-live="polite" style="display:none"></div>
      <div id="exportStatus" class="save-status" role="status" aria-live="polite" style="display:none"></div>
    
@@ -869,7 +899,7 @@
      student={nome:n,idade:idd,data:dtFmt};
      showScreen('sIntro');
    }
-   function startAssessment(){curSec=0;answers={};renderSec(0);showScreen('sQuiz')}
+   function startAssessment(){renderSec(curSec);showScreen('sQuiz')}
    
    /* ===== QUIZ ===== */
    const LABELS=['Realista','Investigativo','Artístico','Social','Empreendedor','Convencional'];
@@ -909,7 +939,9 @@
      });
      document.getElementById('qList').innerHTML=html;
    
-     document.getElementById('btnPrev').style.display=idx>0?'inline-flex':'none';
+     const bp=document.getElementById('btnPrev');
+     bp.style.display='inline-flex';
+     bp.textContent=idx>0?'← Fase anterior':'← Voltar à introdução';
      const bn=document.getElementById('btnNext');
      if(isLast){bn.textContent='✅ Finalizar e ver meus resultados!';bn.className='btn btn-green'}
      else{bn.textContent='Próxima fase →';bn.className='btn btn-primary'}
@@ -939,7 +971,10 @@
      if(curSec<SECTIONS.length-1){curSec++;renderSec(curSec);window.scrollTo({top:0,behavior:'smooth'})}
      else{showResults()}
    }
-   function prevSec(){if(curSec>0){curSec--;renderSec(curSec);window.scrollTo({top:0,behavior:'smooth'})}}
+   function prevSec(){
+     if(curSec>0){curSec--;renderSec(curSec);window.scrollTo({top:0,behavior:'smooth'})}
+     else{showScreen('sIntro')}
+   }
    function flash(msg){const el=document.createElement('div');el.className='xp-flash';el.textContent=msg;document.body.appendChild(el);setTimeout(()=>el.remove(),2300)}
    
    /* ===== SCORING — média simples por tipo (escala 1–4, conforme ATPH) ===== */
@@ -1088,8 +1123,12 @@
            payload[sec.id+'_'+(qi+1)] = answers[sec.id+'_'+qi] || '';
          });
        });
-       const params=new URLSearchParams(payload);
-       await fetch(SHEETS_URL+'?'+params.toString(),{method:'GET',mode:'no-cors'});
+       await fetch(SHEETS_URL,{
+         method:'POST',
+         mode:'no-cors',
+         headers:{'Content-Type':'text/plain;charset=utf-8'},
+         body:JSON.stringify(payload)
+       });
        st.className='save-status success';
        st.textContent='✅ Resultado salvo! Seu professor já pode visualizar seus dados.';
      }catch(e){
@@ -1157,6 +1196,39 @@
      }
    }
    
+   /* ===== REFLEXÃO OPCIONAL — envio separado, vinculado por nome+data ===== */
+   async function sendReflexao(){
+     const texto=document.getElementById('txtReflexao').value.trim();
+     const st=document.getElementById('reflexaoStatus');
+     st.style.display='block';
+     if(!texto){
+       st.className='save-status error';
+       st.textContent='Escreva algo antes de enviar, ou deixe em branco e siga em frente — não é obrigatório.';
+       return;
+     }
+     st.className='save-status saving';
+     st.textContent='💾 Enviando sua reflexão...';
+     try{
+       const payload={
+         tipo:'reflexao_pos_teste',
+         timestamp:new Date().toLocaleString('pt-BR'),
+         nome:student.nome,idade:student.idade,data:student.data,
+         reflexao:texto
+       };
+       await fetch(SHEETS_URL,{
+         method:'POST',
+         mode:'no-cors',
+         headers:{'Content-Type':'text/plain;charset=utf-8'},
+         body:JSON.stringify(payload)
+       });
+       st.className='save-status success';
+       st.textContent='✅ Reflexão enviada. Obrigado por compartilhar!';
+     }catch(e){
+       st.className='save-status error';
+       st.textContent='❌ Não foi possível enviar. Verifique sua conexão.';
+     }
+   }
+
    function restartQuiz(){
      if(!confirm('Tem certeza? Todas as respostas serão apagadas.'))return;
      answers={};curSec=0;showScreen('sWelcome');
