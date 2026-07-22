@@ -1065,7 +1065,9 @@
      showScreen('sResults');
      document.getElementById('riasecCode').textContent=code;
      document.getElementById('resSub').textContent=`Parabéns, ${student.nome}! Seu perfil é ${top3.map(id=>SECTIONS.find(s=>s.id===id).name).join(' + ')}.`;
-     document.getElementById('hexChart').innerHTML=drawHexagon(sc);
+     const hexSvg=drawHexagon(sc);
+     const hexSvgData='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(hexSvg);
+     document.getElementById('hexChart').innerHTML=`<img src="${hexSvgData}" alt="Gráfico hexagonal dos tipos RIASEC" style="width:100%;max-width:300px;margin:0 auto;display:block">`;
    
      const COLS={R:'#e07b39',I:'#046c94',A:'#9b59b6',S:'#e74c3c',E:'#f5a623',C:'#447c54'};
      document.getElementById('barChart').innerHTML=SECTIONS.map(sec=>{
@@ -1156,6 +1158,8 @@
    }
    async function captureResults(){
      const el=document.getElementById('resultsCapture');
+     const imgs=el.querySelectorAll('img');
+     await Promise.all(Array.from(imgs).map(img=>img.complete?Promise.resolve():new Promise(res=>{img.onload=res;img.onerror=res})));
      return await html2canvas(el,{scale:2,useCORS:true,backgroundColor:'#f4f8fb'});
    }
    async function saveAsImage(){
