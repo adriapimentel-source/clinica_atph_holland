@@ -144,7 +144,6 @@
    .question-card:focus-within{box-shadow:0 0 0 3px var(--sec-focus-ring,rgba(4,108,148,.2)),var(--shadow-card)}
    .question-num{font-size:.75rem;font-weight:800;color:var(--gray-mid);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.3rem}
    .question-text{font-size:.95rem;font-weight:600;color:var(--text-main);margin-bottom:.85rem;line-height:1.5}
-   .likert-labels{display:flex;justify-content:space-between;font-size:.72rem;color:var(--text-soft);font-weight:700;margin-bottom:.4rem;padding:0 2px}
    .likert-scale{display:flex;gap:.5rem}
    /* 4-option buttons */
    .option-btn{flex:1;padding:.65rem .2rem;border:2px solid var(--gray-light);border-radius:10px;background:var(--white);font-family:var(--font-main);font-size:.88rem;font-weight:800;color:var(--text-soft);cursor:pointer;transition:all .15s;text-align:center;display:flex;flex-direction:column;align-items:center;gap:.2rem}
@@ -235,7 +234,6 @@
      /* LIKERT — ponto crítico no celular
         Em vez de 4 botões lado a lado (apertado),
         usa 2x2 grid em telas muito pequenas         */
-     .likert-labels{display:none} /* esconde labels de texto, info está no título do botão */
      .likert-scale{
        display:grid;
        grid-template-columns:1fr 1fr;
@@ -631,10 +629,10 @@
    
    /* ===== ESCALA LIKERT — 4 opções (instrumento original ATPH) ===== */
    const LIKERT = [
-     { value:1, label:'1', emoji:'😐', title:'Nenhum interesse' },
-     { value:2, label:'2', emoji:'🙂', title:'Pouco interesse'  },
-     { value:3, label:'3', emoji:'😊', title:'Bastante interesse'},
-     { value:4, label:'4', emoji:'🤩', title:'Muito interesse'  },
+     { value:1, label:'Nenhum', emoji:'😐', title:'Nenhum interesse' },
+     { value:2, label:'Pouco', emoji:'🙂', title:'Pouco interesse'  },
+     { value:3, label:'Bastante', emoji:'😊', title:'Bastante interesse'},
+     { value:4, label:'Muito', emoji:'🤩', title:'Muito interesse'  },
    ];
    
    /* ===== SEÇÕES — questões EXATAS do instrumento ATPH Holland ===== */
@@ -943,7 +941,6 @@
        html+=`<div class="question-card" id="qc_${key}">
          <div class="question-num" aria-hidden="true">${sec.id} — ${qi+1}/${sec.q.length}</div>
          <div class="question-text" id="ql_${key}">${qi+1}. ${q}</div>
-         <div class="likert-labels" aria-hidden="true"><span>Nenhum</span><span>Pouco</span><span>Bastante</span><span>Muito</span></div>
          <div class="likert-scale" role="radiogroup" aria-labelledby="ql_${key}">
            ${LIKERT.map(o=>`<button class="option-btn${sv===o.value?' selected':''}" role="radio" aria-checked="${sv===o.value}" aria-label="${o.title}" title="${o.title}" onclick="selAns('${key}',${o.value},this)"><span class="oe" aria-hidden="true">${o.emoji}</span><span>${o.label}</span></button>`).join('')}
          </div>
