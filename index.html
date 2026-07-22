@@ -102,6 +102,8 @@
    .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.85rem 2rem;border-radius:100px;font-family:var(--font-main);font-size:1rem;font-weight:800;cursor:pointer;border:none;transition:all .2s;text-decoration:none}
    .btn-primary{background:linear-gradient(135deg,var(--blue-mid),var(--blue-dark));color:var(--white);box-shadow:0 4px 16px rgba(4,78,110,.3)}
    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(4,78,110,.4)}
+   .btn-neutral{background:linear-gradient(135deg,#5b6b7a,#3a4650);color:var(--white);box-shadow:0 4px 16px rgba(58,70,80,.3)}
+   .btn-neutral:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(58,70,80,.4)}
    .btn-green{background:linear-gradient(135deg,var(--green-bright),var(--green-mid));color:var(--white);box-shadow:0 4px 16px rgba(124,172,68,.35)}
    .btn-green:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(124,172,68,.5)}
    .btn-ghost{background:transparent;color:var(--blue-mid);border:2px solid var(--blue-mid)}
@@ -138,8 +140,8 @@
    .section-header h2{font-size:1.3rem;font-weight:900;margin-bottom:.2rem}
    .section-header p{font-size:.88rem;opacity:.85}
    .instruction-band{background:rgba(152,200,71,.12);border:1.5px solid var(--green-bright);border-radius:var(--radius-sm);padding:.75rem 1.1rem;font-size:.9rem;font-weight:600;color:var(--green-dark);margin-bottom:1.25rem;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
-   .question-card{background:var(--white);border-radius:var(--radius);padding:1.25rem 1.5rem;box-shadow:var(--shadow-card);margin-bottom:.9rem;border-left:4px solid var(--blue-mid);transition:box-shadow .2s}
-   .question-card:focus-within{box-shadow:0 0 0 3px rgba(4,108,148,.2),var(--shadow-card)}
+   .question-card{background:var(--white);border-radius:var(--radius);padding:1.25rem 1.5rem;box-shadow:var(--shadow-card);margin-bottom:.9rem;border-left:4px solid var(--sec-color,var(--blue-mid));transition:box-shadow .2s}
+   .question-card:focus-within{box-shadow:0 0 0 3px var(--sec-focus-ring,rgba(4,108,148,.2)),var(--shadow-card)}
    .question-num{font-size:.75rem;font-weight:800;color:var(--gray-mid);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.3rem}
    .question-text{font-size:.95rem;font-weight:600;color:var(--text-main);margin-bottom:.85rem;line-height:1.5}
    .likert-labels{display:flex;justify-content:space-between;font-size:.72rem;color:var(--text-soft);font-weight:700;margin-bottom:.4rem;padding:0 2px}
@@ -147,8 +149,8 @@
    /* 4-option buttons */
    .option-btn{flex:1;padding:.65rem .2rem;border:2px solid var(--gray-light);border-radius:10px;background:var(--white);font-family:var(--font-main);font-size:.88rem;font-weight:800;color:var(--text-soft);cursor:pointer;transition:all .15s;text-align:center;display:flex;flex-direction:column;align-items:center;gap:.2rem}
    .option-btn .oe{font-size:1.2rem}
-   .option-btn:hover{border-color:var(--blue-mid);background:rgba(4,108,148,.06);color:var(--blue-mid)}
-   .option-btn.selected{border-color:var(--blue-mid);background:var(--blue-mid);color:white;transform:scale(1.07)}
+   .option-btn:hover{border-color:var(--sec-color,var(--blue-mid));background:var(--sec-hover-bg,rgba(4,108,148,.06));color:var(--sec-color,var(--blue-mid))}
+   .option-btn.selected{border-color:var(--sec-color,var(--blue-mid));background:var(--sec-color,var(--blue-mid));color:white;transform:scale(1.07)}
    .option-btn:focus-visible{outline:3px solid var(--green-bright);outline-offset:2px}
    .nav-footer{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-top:1.5rem;flex-wrap:wrap}
    .questions-answered{font-size:.85rem;color:var(--text-soft);font-weight:600}
@@ -517,7 +519,7 @@
      <div class="nav-footer">
        <button class="btn btn-ghost" id="btnPrev" onclick="prevSec()" style="display:none">← Fase anterior</button>
        <div class="questions-answered" id="ansCount" aria-live="polite"></div>
-       <button class="btn btn-primary" id="btnNext" onclick="nextSec()">Próxima fase →</button>
+       <button class="btn btn-neutral" id="btnNext" onclick="nextSec()">Próxima fase →</button>
      </div>
    </main>
    
@@ -903,9 +905,19 @@
    
    /* ===== QUIZ ===== */
    const LABELS=['Realista','Investigativo','Artístico','Social','Empreendedor','Convencional'];
+   function hexToRgba(hex,alpha){
+     const h=hex.replace('#','');
+     const r=parseInt(h.substring(0,2),16),g=parseInt(h.substring(2,4),16),b=parseInt(h.substring(4,6),16);
+     return `rgba(${r},${g},${b},${alpha})`;
+   }
    function renderSec(idx){
      const sec=SECTIONS[idx];
      const isLast=idx===SECTIONS.length-1;
+   
+     const quizScreen=document.getElementById('sQuiz');
+     quizScreen.style.setProperty('--sec-color',sec.color);
+     quizScreen.style.setProperty('--sec-hover-bg',hexToRgba(sec.color,.08));
+     quizScreen.style.setProperty('--sec-focus-ring',hexToRgba(sec.color,.2));
    
      document.getElementById('qHeader').innerHTML=`
        <div class="section-header" style="background:${sec.hBg}" role="region" aria-label="Fase ${idx+1}: ${sec.name}">
@@ -944,7 +956,7 @@
      bp.textContent=idx>0?'← Fase anterior':'← Voltar à introdução';
      const bn=document.getElementById('btnNext');
      if(isLast){bn.textContent='✅ Finalizar e ver meus resultados!';bn.className='btn btn-green'}
-     else{bn.textContent='Próxima fase →';bn.className='btn btn-primary'}
+     else{bn.textContent='Próxima fase →';bn.className='btn btn-neutral'}
      updCount();
    }
    function selAns(key,val,btn){
@@ -989,7 +1001,7 @@
    
    /* ===== HEXÁGONO RIASEC ===== */
    function drawHexagon(sc){
-     const cx=150,cy=145,R=95;
+     const cx=150,cy=150,R=88;
      const types=['R','I','A','S','E','C'];
      const COLS={R:'#e07b39',I:'#7ec8e3',A:'#c39bd3',S:'#f1948a',E:'#f8c471',C:'#82e0aa'};
      const SHORT={R:'R',I:'I',A:'A',S:'S',E:'E',C:'C'};
@@ -1025,11 +1037,11 @@
      types.forEach((t,i)=>{
        const score=sc[t]||0;
        const sv=vtx(i,R*score/4);
-       const lv=vtx(i,R+30);
-       const lv2=vtx(i,R+46);
+       const lv=vtx(i,R+26);
+       const lv2=vtx(i,R+52);
        dots+=`<circle cx="${sv.x.toFixed(1)}" cy="${sv.y.toFixed(1)}" r="5" fill="${COLS[t]}" stroke="white" stroke-width="1.5"/>`;
-       labels+=`<text x="${lv.x.toFixed(1)}" y="${lv.y.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-family="Nunito,sans-serif" font-size="17" font-weight="900" fill="${COLS[t]}">${SHORT[t]}</text>`;
-       labels+=`<text x="${lv2.x.toFixed(1)}" y="${lv2.y.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-family="Nunito,sans-serif" font-size="13" font-weight="700" fill="rgba(255,255,255,.95)">${score.toFixed(2)}</text>`;
+       labels+=`<text x="${lv.x.toFixed(1)}" y="${lv.y.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-family="Nunito,sans-serif" font-size="15" font-weight="900" fill="${COLS[t]}">${SHORT[t]}</text>`;
+       labels+=`<text x="${lv2.x.toFixed(1)}" y="${lv2.y.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-family="Nunito,sans-serif" font-size="12" font-weight="700" fill="${COLS[t]}">${score.toFixed(2)}</text>`;
      });
    
      // Marcas de escala no eixo R (direita visual)
@@ -1039,7 +1051,7 @@
        scaleMks+=`<text x="${(sv.x+5).toFixed(1)}" y="${sv.y.toFixed(1)}" font-family="Nunito,sans-serif" font-size="8" fill="rgba(255,255,255,.5)" dominant-baseline="middle">${v}</text>`;
      });
    
-     return `<svg viewBox="0 0 300 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:300px;margin:0 auto;display:block" role="img" aria-label="Gráfico hexagonal dos tipos RIASEC">
+     return `<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:300px;margin:0 auto;display:block" role="img" aria-label="Gráfico hexagonal dos tipos RIASEC">
        ${grid}${axes}
        <polygon points="${scorePts}" fill="rgba(152,200,71,.25)" stroke="#98c847" stroke-width="2.5" stroke-linejoin="round"/>
        ${scaleMks}${dots}${labels}
@@ -1133,7 +1145,7 @@
        st.textContent='✅ Resultado salvo! Seu professor já pode visualizar seus dados.';
      }catch(e){
        st.className='save-status error';
-       st.textContent='❌ Não foi possível salvar automaticamente. Verifique sua conexão ou avise o professor.';
+       st.textContent='❌ Não foi possível salvar automaticamente. Verifique sua conexão ou avise a psicóloga.';
      }
    }
    
